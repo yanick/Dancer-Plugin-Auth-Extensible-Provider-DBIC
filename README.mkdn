@@ -1,112 +1,30 @@
-package Dancer::Plugin::Auth::Extensible::Provider::DBIC;
-BEGIN {
-  $Dancer::Plugin::Auth::Extensible::Provider::DBIC::AUTHORITY = 'cpan:YANICK';
-}
-{
-  $Dancer::Plugin::Auth::Extensible::Provider::DBIC::VERSION = '0.1.1';
-}
-# ABSTRACT: authenticate via DBIx::Class
-
-use strict;
-use base 'Dancer::Plugin::Auth::Extensible::Provider::Base';
-use Dancer::Plugin::DBIC;
-use Dancer qw(:syntax);
-
-
-
-
-sub authenticate_user {
-    my ($self, $username, $password) = @_;
-
-    # Look up the user:
-    my $user = $self->get_user_details($username) or return;
-
-    return $self->match_password($password, $user);
-}
-
-sub match_password {
-    my( $self, $password, $user ) = @_;
-
-    my $settings = $self->realm_settings;
-    my $password_check = $settings->{password_check}  || 'check_password';
-
-    return $user->$password_check( $password );
-}
-
-
-# Return details about the user.  The user's row in the users table will be
-# fetched and all columns returned as a hashref.
-sub get_user_details {
-    my ($self, $username) = @_;
-
-    return unless defined $username;
-
-    my $settings = $self->realm_settings;
-
-    # Get our database handle and find out the table and column names:
-    my $database = schema($settings->{db_connection_name})
-        or die "No database connection";
-
-    my $users_table     = $settings->{users_resultset} || 'User';
-    my $username_column = $settings->{username_column} || 'username';
-
-    # Look up the user, 
-    my $user = $database->resultset($users_table)->find({
-            $username_column => $username
-    }) or debug("No such user $username");
-
-    return $user;
-}
-
-sub get_user_roles {
-    my ($self, $username) = @_;
-
-    my $settings = $self->realm_settings;
-
-    # Get details of the user first; both to check they exist, and so we have
-    # their ID to use.
-    my $user = $self->get_user_details($username)
-        or return;
-
-    my $roles = $settings->{roles_relationship} || 'roles';
-    my $role_column = $settings->{role_column} || 'role';
-
-    return [ $user->$roles->get_column( $role_column )->all ];
-}
-
-1;
-
-__END__
-
-=pod
-
-=head1 NAME
+# NAME
 
 Dancer::Plugin::Auth::Extensible::Provider::DBIC - authenticate via DBIx::Class
 
-=head1 VERSION
+# VERSION
 
 version 0.1.1
 
-=head1 DESCRIPTION
+# DESCRIPTION
 
 This class is an authentication provider designed to authenticate users against
-a database using L<Dancer::Plugin::DBIC> within the
-L<Dancer::Plugin::Auth::Extensible> framework.
+a database using [Dancer::Plugin::DBIC](http://search.cpan.org/perldoc?Dancer::Plugin::DBIC) within the
+[Dancer::Plugin::Auth::Extensible](http://search.cpan.org/perldoc?Dancer::Plugin::Auth::Extensible) framework.
 
-See L<Dancer::Plugin::DBIC> for how to configure a database connection
-appropriately; see the L</CONFIGURATION> section below for how to configure this
+See [Dancer::Plugin::DBIC](http://search.cpan.org/perldoc?Dancer::Plugin::DBIC) for how to configure a database connection
+appropriately; see the ["CONFIGURATION"](#CONFIGURATION) section below for how to configure this
 authentication provider with database details.
 
-See L<Dancer::Plugin::Auth::Extensible> for details on how to use the
+See [Dancer::Plugin::Auth::Extensible](http://search.cpan.org/perldoc?Dancer::Plugin::Auth::Extensible) for details on how to use the
 authentication framework, including how to pick a more useful authentication
 provider.
 
-=head1 CONFIGURATION
+# CONFIGURATION
 
 This provider tries to use sensible defaults, so you may not need to provide
 much configuration if your database tables look similar to those in the
-L</SUGGESTED SCHEMA> section below.
+["SUGGESTED SCHEMA"](#SUGGESTED SCHEMA) section below.
 
 The most basic configuration, assuming defaults for all options, and defining a
 single authentication realm named 'users':
@@ -118,7 +36,7 @@ single authentication realm named 'users':
                     provider: 'DBIC'
 
 You would still need to have provided suitable database connection details to
-L<Dancer::Plugin::Database>, of course;  see the docs for that plugin for full
+[Dancer::Plugin::Database](http://search.cpan.org/perldoc?Dancer::Plugin::Database), of course;  see the docs for that plugin for full
 details, but it could be as simple as, e.g.:
 
     plugins:
@@ -158,15 +76,15 @@ A full example showing all options:
                         # the user's
                     password_check:      check_password
 
-See the main L<Dancer::Plugin::Auth::Extensible> documentation for how to
+See the main [Dancer::Plugin::Auth::Extensible](http://search.cpan.org/perldoc?Dancer::Plugin::Auth::Extensible) documentation for how to
 configure multiple authentication realms.
 
-=head1 SUGGESTED SCHEMA
+# SUGGESTED SCHEMA
 
 If you use a DBIx::Class schema similar to the examples provided here, you should need
 minimal configuration to get this authentication provider to work for you.
 
-=head2 users class
+## users class
 
     package My::Schema::Result::User;
 
@@ -218,12 +136,12 @@ minimal configuration to get this authentication provider to work for you.
     1;
 
 You will quite likely want other fields to store e.g. the user object
-will be returned by the C<logged_in_user> keyword for your convenience.
+will be returned by the `logged_in_user` keyword for your convenience.
 
-=head2 roles class
+## roles class
 
 You'll need a table to store a list of available roles in (unless you're not
-using roles - in which case, disable role support (see the L</CONFIGURATION>
+using roles - in which case, disable role support (see the ["CONFIGURATION"](#CONFIGURATION)
 section).
 
     package My::Schema::Result::Role;
@@ -261,7 +179,7 @@ section).
 
     1;
 
-=head2 user_roles class
+## user\_roles class
 
 Finally, (unless you've disabled role support)  you'll need a table to store
 user <-> role mappings (i.e. one row for every role a user has; so adding 
@@ -300,21 +218,19 @@ extra roles to a user consists of adding a new role to this table).
 
     1;
 
-=head1 SEE ALSO
+# SEE ALSO
 
-L<Dancer::Plugin::Auth::Extensible>
+[Dancer::Plugin::Auth::Extensible](http://search.cpan.org/perldoc?Dancer::Plugin::Auth::Extensible)
 
-L<Dancer::Plugin::DBIC>
+[Dancer::Plugin::DBIC](http://search.cpan.org/perldoc?Dancer::Plugin::DBIC)
 
-=head1 AUTHOR
+# AUTHOR
 
-Yanick Champoux <yanick@cpan.org>
+Yanick Champoux <yanick@cpan.org> [![endorse](http://api.coderwall.com/yanick/endorsecount.png)](http://coderwall.com/yanick)
 
-=head1 COPYRIGHT AND LICENSE
+# COPYRIGHT AND LICENSE
 
 This software is copyright (c) 2013 by Yanick Champoux.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
-=cut

@@ -1,18 +1,11 @@
 Revision history for Dancer-Plugin-Auth-Extensible-DBIC
 
-{{$NEXT}}
- [API CHANGES]
-
+0.1.1 2013-08-21
  [BUG FIXES]
  - Remove dependency on MyApp.
 
- [DOCUMENTATION]
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 2 files changed, 19 insertions(+), 1 deletion(-)
 
 0.1.0 2013-08-21
  - First version, unleashed on an unsuspecting world.
