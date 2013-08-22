@@ -10,7 +10,6 @@ README
 README.mkdn
 SIGNATURE
 lib/Dancer/Plugin/Auth/Extensible/Provider/DBIC.pm
-t/00-compile.t
 t/000-report-versions-tiny.t
 t/dbic.t
 t/dbic/My/Schema.pm
