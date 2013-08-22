@@ -1,5 +1,8 @@
 Revision history for Dancer-Plugin-Auth-Extensible-DBIC
 
-{{$NEXT}}
+0.1.0 2013-08-21
+ - First version, unleashed on an unsuspecting world.
 
-  - First version, unleashed on an unsuspecting world.
+ [STATISTICS]
+ - code churn: 8 files changed, 120 insertions(+), 105 deletions(-)
+

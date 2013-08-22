@@ -1,0 +1,43 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.68.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 11d78a4f5daa84ee76e49181ffe287421150a1e6 AUTHOR_PLEDGE
+SHA1 673d4f5c7d56f6475bdedd538157990a2ab71c82 Build.PL
+SHA1 d8df9671df330d20fb9f1d52068d2546c641f20e Changes
+SHA1 df6284a878a7ba481fab245bbdda82ef7683f301 INSTALL
+SHA1 cf5dc9c929415cfa7133eed863def866ade9774d LICENSE
+SHA1 419db9445ca60685d192d56533d00ee620b55def MANIFEST
+SHA1 0e8ead95a3b34d063d39c28e3d12028f0b5bf375 META.json
+SHA1 8ecffed2be070bd8a3406bf617d6a06f9626344c META.yml
+SHA1 d08a3c0985c46bec9b68ebccda47cc1a57de1fc1 README
+SHA1 d0784a29e71c45ec1a8fe19dcb6e7ff91957002c README.mkdn
+SHA1 107ba3d13e1e64f081af82c5f59d79b0aa08d114 lib/Dancer/Plugin/Auth/Extensible/Provider/DBIC.pm
+SHA1 7bced91c22f82e4f6399154c97872d929f0ad15d t/00-compile.t
+SHA1 eba598d41b7d7ab9237122fcbc645c81ba708014 t/000-report-versions-tiny.t
+SHA1 94221915334ab89213f8d517565bf93c43835697 t/dbic.t
+SHA1 6819cb722203a6bad94b27991391790cf5366600 t/dbic/My/Schema.pm
+SHA1 8624f8ac9d38bd07be0b9a78fa548831594b710a t/dbic/My/Schema/Result/Roles.pm
+SHA1 e2fdbea3b7bb6d031ef22083e1435e4378ca0a35 t/dbic/My/Schema/Result/UserRoles.pm
+SHA1 f616b534239635fd705527a3645b6fe17ed5c877 t/dbic/My/Schema/Result/Users.pm
+SHA1 5d3c896b1303d0b636b10cae1e06db50d877e496 t/dbic/MyApp.pm
+SHA1 ec3f84bfd7a9ce3246e7592f4134100c6b5ce02b xt/release/unused-vars.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iEYEARECAAYFAlIVZewACgkQ34Hwf+GwC4zKywCgpmEoJhOpss2EQqu+epMbfLRQ
+CTgAoNqB6hX828Cu8UbBpgzd0iqVn83/
+=X05L
+-----END PGP SIGNATURE-----
