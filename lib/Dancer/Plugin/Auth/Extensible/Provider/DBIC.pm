@@ -6,6 +6,84 @@ use base 'Dancer::Plugin::Auth::Extensible::Provider::Base';
 use Dancer::Plugin::DBIC;
 use Dancer qw(:syntax);
 
+
+=head1 DESCRIPTION
+
+This class is an authentication provider designed to authenticate users against
+a database using L<Dancer::Plugin::DBIC> within the
+L<Dancer::Plugin::Auth::Extensible> framework.
+
+See L<Dancer::Plugin::DBIC> for how to configure a database connection
+appropriately; see the L</CONFIGURATION> section below for how to configure this
+authentication provider with database details.
+
+See L<Dancer::Plugin::Auth::Extensible> for details on how to use the
+authentication framework, including how to pick a more useful authentication
+provider.
+
+
+=head1 CONFIGURATION
+
+This provider tries to use sensible defaults, so you may not need to provide
+much configuration if your database tables look similar to those in the
+L</SUGGESTED SCHEMA> section below.
+
+The most basic configuration, assuming defaults for all options, and defining a
+single authentication realm named 'users':
+
+    plugins:
+        Auth::Extensible:
+            realms:
+                users:
+                    provider: 'DBIC'
+
+You would still need to have provided suitable database connection details to
+L<Dancer::Plugin::Database>, of course;  see the docs for that plugin for full
+details, but it could be as simple as, e.g.:
+
+    plugins:
+        Auth::Extensible:
+            realms:
+                users:
+                    provider: 'DBIC'
+        DBIC:
+            default:
+                dsn:          'dbi:SQLite:mydb.sqlite'
+                schema_class: My::Schema
+
+
+A full example showing all options:
+
+    plugins:
+        Auth::Extensible:
+            realms:
+                users:
+                    provider: 'DBIC'
+                    # optionally set DB connection name to use (see named 
+                    # connections in Dancer::Plugin::Database docs)
+                    db_connection_name: 'foo'
+
+                    # Optionally disable roles support, if you only want to check
+                    # for successful logins but don't need to use role-based access:
+                    disable_roles: 1
+
+                    # optionally specify names of the table, relationship and
+                    # columns (the values given below are the defaults)
+                    users_resultset:     User
+                    roles_relationship:  roles
+                    role_column:         role
+                    username_column:     username
+                        # function in the user resultset 
+                        # taking the submitted password
+                        # and returning true if it matches
+                        # the user's
+                    password_check:      check_password
+
+See the main L<Dancer::Plugin::Auth::Extensible> documentation for how to
+configure multiple authentication realms.
+
+=cut
+
 =head1 SUGGESTED SCHEMA
 
 If you use a DBIx::Class schema similar to the examples provided here, you should need
@@ -208,3 +286,10 @@ sub get_user_roles {
 }
 
 1;
+
+=head1 SEE ALSO
+
+L<Dancer::Plugin::Auth::Extensible>
+
+L<Dancer::Plugin::DBIC>
+

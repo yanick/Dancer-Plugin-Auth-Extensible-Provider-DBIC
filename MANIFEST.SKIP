@@ -5,3 +5,4 @@ Dancer-Plugin-Auth-Extensible-DBIC.*
 ^\.git
 ^\.build
 
+Dancer-Plugin-A.*
