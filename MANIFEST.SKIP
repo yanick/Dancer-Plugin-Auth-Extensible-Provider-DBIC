@@ -1,8 +1,0 @@
-^dist.ini
-^MANIFEST.SKIP
-Dancer-Plugin-Auth-Extensible-DBIC.*
-^\.gitignore
-^\.git
-^\.build
-
-Dancer-Plugin-A.*

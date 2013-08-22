@@ -1,18 +1,11 @@
 Revision history for Dancer-Plugin-Auth-Extensible-DBIC
 
-{{$NEXT}}
- [API CHANGES]
-
+0.1.2 2013-08-21
  [BUG FIXES]
  - Test::Compile is misbehaving...
 
- [DOCUMENTATION]
-
- [ENHANCEMENTS]
-
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 3 files changed, 11 insertions(+), 3 deletions(-)
 
 0.1.1 2013-08-21
  [BUG FIXES]
