@@ -20,6 +20,7 @@ BEGIN {
                 users => {
                     provider        => 'DBIC',
                     users_resultset => 'Users',
+                    password_check  => 'check_secret',
                 },
             },
         },
@@ -27,8 +28,8 @@ BEGIN {
 
     set session => 'Simple';
 
-    set show_errors => 1;
-    #set logger => 'console';
+    set show_errors => 0;
+#    set logger => 'console';
 }
 
 use Dancer::Plugin::Auth::Extensible;
@@ -37,12 +38,10 @@ get '/init' => sub {
     
     schema->deploy;
 
-    my $user = rset('Users')->create({ username => 'bob', password => 'please' });
+    my $user = rset('Users')->create({ username => 'bob', secret => 'please' });
 
     my $role = rset('Roles')->create({ role => 'overlord' });
 
-    $DB::single = 1;
-    
     $user->add_to_roles($role, {});
 };
 

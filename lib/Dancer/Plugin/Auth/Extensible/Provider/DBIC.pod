@@ -59,15 +59,15 @@ A full example showing all options:
 
                     # optionally specify names of the table, relationship and
                     # columns (the values given below are the defaults)
-                    users_resultset:    'User'
-                    roles_relationship: 'roles'
-                    role_column:        'role'
-
-                    # optionally set the column names (see the SUGGESTED SCHEMA
-                    # section below for the default names; if you use them, they'll
-                    # Just Work)
-                    users_username_column: 'username'
-                    users_password_column: 'password'
+                    users_resultset:     User
+                    roles_relationship:  roles
+                    role_column:         role
+                    username_column:     username
+                        # function in the user resultset 
+                        # taking the submitted password
+                        # and returning true if it matches
+                        # the user's
+                    password_check:      check_password
 
 See the main L<Dancer::Plugin::Auth::Extensible> documentation for how to
 configure multiple authentication realms.

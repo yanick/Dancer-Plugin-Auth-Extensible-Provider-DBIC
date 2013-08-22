@@ -20,7 +20,7 @@ __PACKAGE__->add_columns(
         size => 32,
         is_nullable => 0,
     },
-    password => {
+    secret => {
         data_type => 'VARCHAR',
         size => 40,
         is_nullable => 0,
@@ -30,7 +30,7 @@ __PACKAGE__->add_columns(
             algorithm => 'SHA-1', 
             format => 'hex',
         },
-        encode_check_method => 'check_password',
+        encode_check_method => 'check_secret',
     },
 );
 

@@ -154,18 +154,16 @@ sub authenticate_user {
     # Look up the user:
     my $user = $self->get_user_details($username) or return;
 
-    # OK, we found a user, let match_password (from our base class) take care of
-    # working out if the password is correct
-
-    my $settings = $self->realm_settings;
-    my $password_column = $settings->{users_password_column} || 'password';
     return $self->match_password($password, $user);
 }
 
 sub match_password {
     my( $self, $password, $user ) = @_;
 
-    return $user->check_password( $password );
+    my $settings = $self->realm_settings;
+    my $password_check = $settings->{password_check}  || 'check_password';
+
+    return $user->$password_check( $password );
 }
 
 
@@ -182,9 +180,8 @@ sub get_user_details {
     my $database = schema($settings->{db_connection_name})
         or die "No database connection";
 
-    my $users_table     = $settings->{users_resultset}       || 'User';
-    my $username_column = $settings->{users_username_column} || 'username';
-    my $password_column = $settings->{users_password_column} || 'password';
+    my $users_table     = $settings->{users_resultset} || 'User';
+    my $username_column = $settings->{username_column} || 'username';
 
     # Look up the user, 
     my $user = $database->resultset($users_table)->find({
@@ -198,8 +195,6 @@ sub get_user_roles {
     my ($self, $username) = @_;
 
     my $settings = $self->realm_settings;
-    # Get our database handle and find out the table and column names:
-    my $database = schema($settings->{db_connection_name});
 
     # Get details of the user first; both to check they exist, and so we have
     # their ID to use.
