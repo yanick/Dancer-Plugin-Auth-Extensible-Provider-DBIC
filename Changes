@@ -4,6 +4,7 @@ Revision history for Dancer-Plugin-Auth-Extensible-DBIC
  [API CHANGES]
 
  [BUG FIXES]
+ - Remove dependency of test to DBIx::Class::EncodedColumn
 
  [DOCUMENTATION]
 

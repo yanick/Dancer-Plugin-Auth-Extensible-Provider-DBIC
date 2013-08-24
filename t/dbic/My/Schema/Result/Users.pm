@@ -5,7 +5,7 @@ use warnings;
 
 use base qw/ DBIx::Class::Core /;
 
-__PACKAGE__->load_components(qw/EncodedColumn Core/);
+__PACKAGE__->load_components(qw/Core/);
 
 __PACKAGE__->table('Users');
 
@@ -30,9 +30,13 @@ __PACKAGE__->add_columns(
             algorithm => 'SHA-1', 
             format => 'hex',
         },
-        encode_check_method => 'check_secret',
     },
 );
+
+sub check_secret {
+    my( $self, $password ) = @_;
+    return $self->secret eq $password;
+}
 
 __PACKAGE__->set_primary_key( 'user_id' );
 __PACKAGE__->add_unique_constraint( 'username' => [ 'username' ] );
